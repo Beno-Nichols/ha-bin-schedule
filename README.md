@@ -36,17 +36,22 @@ triggers:
 conditions:
 	- condition: template
 		value_template: >-
-			{{ (states('sensor.next_collection') | as_datetime | as_local).date()
+			{{ has_value('sensor.next_collection') and
+				 (states('sensor.next_collection') | as_datetime | as_local).date()
 				 == (now() + timedelta(days=1)).date() }}
 actions:
-	- action: notify.mobile_app_your_phone
+	- action: notify.send_message
+		target:
+			entity_id: notify.bens_phone
 		data:
 			title: Bins out tomorrow
 			message: >-
-				{{ state_attr('sensor.bins_due', 'bin_types') | join(', ') }} collection
-				is tomorrow. Collection day: {{ state_attr('sensor.next_collection', 'collection_day') }}.
+				{{ state_attr('sensor.bins_due', 'bin_types') | default([], true) | join(', ') }}
+				collection is tomorrow. Collection day: {{ state_attr('sensor.next_collection',
+				'collection_day') | default('unknown', true) }}.
 			data:
-				image: "{{ state_attr('sensor.bins_due', 'bin_image') }}"
+				image: >-
+					{{ state_attr('sensor.bins_due', 'bin_image') | default('', true) }}
 mode: single
 ```
 
