@@ -10,3 +10,5 @@ CONF_STREET = "street"
 CONF_STREET_NUMBER = "street_number"
 CONF_API_KEY = "api_key"
 DEFAULT_SCAN_INTERVAL = 86400
+GENERAL_GREEN_IMAGE = "https://www.brisbane.qld.gov.au/content/dam/brisbanecitycouncil/common/images/General-and-Green-Waste-bins-V3.jpg"
+GENERAL_RECYCLING_IMAGE = "https://www.brisbane.qld.gov.au/content/dam/brisbanecitycouncil/common/images/General-and-Recycling-bins-V3.jpg"

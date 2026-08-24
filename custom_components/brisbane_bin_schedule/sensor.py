@@ -5,7 +5,7 @@ from __future__ import annotations
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, GENERAL_GREEN_IMAGE, GENERAL_RECYCLING_IMAGE
 from .coordinator import BrisbaneBinScheduleCoordinator
 
 
@@ -49,6 +49,18 @@ class BrisbaneScheduleSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def extra_state_attributes(self):
+        next_collection = self.coordinator.data.get("next")
+        next_date = next_collection["date"] if next_collection else None
+        bin_types = [
+            item["type"]
+            for item in self.coordinator.data.get("collections", [])
+            if item["date"] == next_date
+        ] if next_date else []
+        image_url = (
+            GENERAL_RECYCLING_IMAGE
+            if any("Recycling" in item for item in bin_types)
+            else GENERAL_GREEN_IMAGE
+        )
         return {
             "upcoming": [
                 {"date": item["date"].isoformat(), "bin": item["type"]}
@@ -56,4 +68,6 @@ class BrisbaneScheduleSensor(CoordinatorEntity, SensorEntity):
             ],
             "collection_day": self.coordinator.data.get("collection_day"),
             "zone": self.coordinator.data.get("zone"),
+            "bin_types": bin_types,
+            "bin_image": image_url,
         }
