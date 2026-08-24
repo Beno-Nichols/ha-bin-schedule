@@ -31,31 +31,29 @@ Add an automation in Home Assistant and replace the notification service with yo
 ```yaml
 alias: Bins out reminder
 triggers:
-	- trigger: time
-		at: "07:00:00"
+  - trigger: time
+    at: "07:00:00"
 conditions:
-	- condition: template
-		value_template: >-
-			{{ has_value('sensor.next_collection') and
-				 (states('sensor.next_collection') | as_datetime | as_local).date()
-				 == (now() + timedelta(days=1)).date() }}
+  - condition: template
+    value_template: >-
+      {{ has_value('sensor.next_collection') and
+         (states('sensor.next_collection') | as_datetime | as_local).date()
+         == (now() + timedelta(days=1)).date() }}
 actions:
-	- action: notify.send_message
-		target:
-			entity_id: notify.bens_phone
-		data:
-			title: Bins out tomorrow
-			message: >-
-				{{ state_attr('sensor.bins_due', 'bin_types') | default([], true) | join(', ') }}
-				collection is tomorrow. Collection day: {{ state_attr('sensor.next_collection',
-				'collection_day') | default('unknown', true) }}.
-			data:
-				image: >-
-					{{ state_attr('sensor.bins_due', 'bin_image') | default('', true) }}
+  - action: notify.mobile_app_bens_phone
+    data:
+      title: Bins out tomorrow
+      message: >-
+        Bins: {{ state_attr('sensor.bins_due', 'bin_types') | default(['unknown'], true) | join(', ') }}.
+        Collection is tomorrow. Collection day: {{ state_attr('sensor.next_collection',
+        'collection_day') | default('unknown', true) }}.
+      data:
+        image: >-
+          {{ state_attr('sensor.bins_due', 'bin_image') | default('', true) }}
 mode: single
 ```
 
-The date sensor is the trigger source and the `bins_due` attributes provide both the bin image and bin names for the notification.
+The date sensor is the trigger source and the `bins_due` attributes provide both the bin image and bin names for the notification. Replace `notify.mobile_app_bens_phone` with the exact mobile-app action shown under **Developer tools > Actions** for your phone. The generic `notify.send_message` action supports the message but may reject the nested mobile-app image data.
 
 ## API
 

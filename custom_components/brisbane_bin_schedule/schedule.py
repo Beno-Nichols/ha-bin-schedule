@@ -63,11 +63,6 @@ def parse_schedule(payload):
             found_type = next((value[key] for key in TYPE_KEYS if key in value), "Bin")
             if found_date:
                 records.append({"date": found_date, "type": _label(found_type)})
-            collection_day = value.get("collection_day")
-            if collection_day and not found_date and not any(value.get(field) for field in BIN_DATE_FIELDS):
-                next_date = _next_weekday(collection_day)
-                if next_date:
-                    records.append({"date": next_date, "type": "Collection day"})
             for child in value.values():
                 visit(child)
         elif isinstance(value, list):
