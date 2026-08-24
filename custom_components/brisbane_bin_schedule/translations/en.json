@@ -1,0 +1,15 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Brisbane bin schedule",
+        "description": "Enter your Brisbane City Council address and API subscription key.",
+        "data": {
+          "suburb": "Suburb",
+          "street": "Street name",
+          "street_number": "Street number"
+        }
+      }
+    }
+  }
+}

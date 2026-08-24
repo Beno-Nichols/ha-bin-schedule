@@ -1,0 +1,7 @@
+{
+  "name": "Brisbane Bin Schedule",
+  "content_in_root": false,
+  "filename": "brisbane_bin_schedule",
+  "render_readme": true,
+  "homeassistant": "2024.1.0"
+}
