@@ -22,7 +22,7 @@ next_entity: sensor.next_collection
 bins_entity: sensor.bins_due
 ```
 
-The next collection sensor exposes the next collection date, collection weekday, zone, upcoming records, bin types, and a `bin_image` URL. The `Bins due` sensor identifies General waste, Recycling, or Green waste for that date.
+Use the exact entity IDs created by Home Assistant. Find them under **Developer tools > States** by searching for `Next collection` and `Bins due`; entity IDs can include an address suffix if you have more than one configured address. The next collection sensor exposes the next collection date, collection weekday, zone, upcoming records, bin types, and a `bin_image` URL. The `Bins due` sensor identifies General waste, Recycling, or Green waste for that date.
 
 ## Day-before notification
 
@@ -59,4 +59,4 @@ The date sensor is the trigger source and the `bins_due` attributes provide both
 
 The integration calls the Brisbane City Council Open Data Bin Collection Calendar endpoint using the configured address:
 
-`https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/waste-collection-days-collection-days/records`
+`https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-calendar/records`
