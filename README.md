@@ -50,10 +50,11 @@ actions:
       data:
         image: >-
           {{ state_attr('sensor.bins_due', 'bin_image') | default('', true) }}
+        clickAction: "/lovelace/0"
 mode: single
 ```
 
-The date sensor is the trigger source and the `bins_due` attributes provide both the bin image and bin names for the notification. Replace `notify.mobile_app_bens_phone` with the exact mobile-app action shown under **Developer tools > Actions** for your phone. The generic `notify.send_message` action supports the message but may reject the nested mobile-app image data.
+The date sensor is the trigger source and the `bins_due` attributes provide both the bin image and bin names for the notification. Replace `notify.mobile_app_bens_phone` with the exact mobile-app action shown under **Developer tools > Actions** for your phone. Change `/lovelace/0` to the dashboard view containing the bin card. The generic `notify.send_message` action supports the message but may reject the nested mobile-app image data.
 
 ## API
 
